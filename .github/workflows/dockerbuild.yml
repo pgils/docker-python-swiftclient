@@ -2,7 +2,10 @@ name: ci
 
 on:
   push:
-    branches: main
+    branches:
+    - main
+  schedule:
+    - cron: '0 10 * * 0' # every sunday at 10am
 
 jobs:
   multi:
@@ -24,6 +27,9 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
+        name: Prepare
+        run: echo "date_tag=$(date +%Y%m%d)" >> $GITHUB_ENV
+      -
         name: Build and push
         uses: docker/build-push-action@v2
         with:
@@ -33,3 +39,4 @@ jobs:
           push: true
           tags: |
             pgils/python-swiftclient:latest
+            pgils/python-swiftclient:${{ env.date_tag }}
