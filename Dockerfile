@@ -8,7 +8,7 @@ RUN pip install -U \
         python-swiftclient \
         python-keystoneclient
 
-FROM python:3-alpine
+FROM python:${PYTHON}-alpine
 ARG PYTHON
 
 COPY --from=build \
