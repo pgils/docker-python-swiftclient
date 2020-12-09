@@ -2,7 +2,10 @@ name: ci
 
 on:
   push:
-    branches: main
+    branches:
+    - main
+  schedule:
+    - cron: '0 10 * * 0' # every sunday at 10am
 
 jobs:
   multi:
